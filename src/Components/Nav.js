@@ -5,10 +5,14 @@ export default function Nav() {
             <img src="" alt="Logo" />
             <div className="flex gap-2">
                 <button className="font-[Poppins]">
-                    Home
+                    <Link to="/">
+                        Home
+                    </Link>
                 </button>
                 <button className="font-[Poppins]">
-                    Info
+                    <Link to="/info">
+                        Info
+                    </Link>
                 </button>
 
             </div>

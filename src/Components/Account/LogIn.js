@@ -12,15 +12,7 @@ export default function Login() {
             .then((response) => response.json())
             .then((data) => console.log(data))
     }
-    async function CheckLogins(name) {
-        setLogin(name)
-        fetch("url", {
-            method: 'POST',
-            body: JSON.stringify(name),
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-    }
+    
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -31,8 +23,8 @@ export default function Login() {
                         </h1>
                         <form onSubmit={LogIn} className="space-y-4 md:space-y-6" action="#">
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="text" onChange={(e) => setLogin(e.target.value)} name="text" className="block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                <label htmlFor="text" className="font-[Poppins] peer-focus:font-medium absolute text-sm text-[#172c66] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Login</label>
+                                <input type="text" onChange={(e) => setLogin(e.target.value)} name="login" className="block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <label htmlFor="login" className="font-[Poppins] peer-focus:font-medium absolute text-sm text-[#172c66] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Login</label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
                                 <input type="password" onChange={(e) => setPass(e.target.value)} name="password" className="block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -55,7 +47,7 @@ export default function Login() {
                                 <p className=" font-[Poppins] text-sm font-light text-gray-500 dark:text-gray-400">
                                     Don’t have an account yet?
                                 </p>
-                                <div className="font-medium text-blue-600 hover:underline dark:text-primary-500"><Link to="/">Sign up</Link></div>
+                                <div className="font-medium text-blue-600 hover:underline dark:text-primary-500"><Link to="/signup">Sign up</Link></div>
                             </div>
                         </form>
                     </div>

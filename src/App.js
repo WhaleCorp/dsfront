@@ -10,6 +10,7 @@ import Main from './Components/Main';
 import Controller from './Components/Controller';
 import Nav from './Components/Nav';
 import Login from './Components/Account/LogIn';
+import SignUp from './Components/Account/SignUp';
 export default function App() {
 
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp/>}/>
           </Routes>
         </Router>
       </div>
