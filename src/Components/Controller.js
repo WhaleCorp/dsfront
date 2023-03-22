@@ -19,9 +19,9 @@ export default function Controller() {
     }
 
     async function getAllConnected() {
-        fetch('https://localhost:7296/Connections/GetAllConnected')
+        fetch('https://localhost:7296/Auth/GenerateCode')
             .then((response) => response.json())
-            .then((json) => setAllCon(json))
+            .then((json) => console.log(json))
     }
     return (
         <div>
