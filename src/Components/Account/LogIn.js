@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { request } from "../../Helpers/Requests";
 export default function Login() {
     const [login, setLogin] = useState('');
     const [pass, setPass] = useState('');
     async function LogIn(e) {
         e.preventDefault()
-        fetch("url", {
-            method: 'POST',
-            body: JSON.stringify({ login, pass }),
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
+            request("Auth/Auth", "POST", { Login:login, Password:pass })
+            .then((data) => console.log(data))//token here
     }
     
     return (

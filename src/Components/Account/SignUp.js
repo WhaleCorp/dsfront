@@ -1,7 +1,7 @@
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom";
-import { User, UserPassword, CreateUserModel } from "../../Models/User.ts";
+import { User } from "../../Models/User.ts";
 import { request } from "../../Helpers/Requests";
 import { useIMask } from "react-imask";
 import ErrorInput from "../../Helpers/ErrorInput";
@@ -12,26 +12,28 @@ export default function SignUp() {
     const [availableLogin, setAvailableLogin] = useState({ available: true, login: '' });
     const [phoneNumber, setPhoneNumber] = useState("")
     const [password, setPassword] = useState('');
-    const [rePassword, setRePassword] = useState('');
+    const [validPass, setValidPass] = useState(true);
     const opts = { mask: '+{1} (000) 000-0000' };
     const { ref } = useIMask(opts, {
-        onChange: (e) => { console.log(e);setPhoneNumber(e.target.value) }
+        onComplete: (e) => { setPhoneNumber(e) }
     });
 
     async function CheckLogins(login) {
         if (login !== '')
             request("User/CheckLogins", "GET", [login], ["login"]).then((result) => setAvailableLogin(result))
-        // if (availableLogin.available === false) {
-        //     div = 'outline outline-offset-[10px] outline-red-500 outline-2 rounded-md';
-        // }
+    }
+
+    function CheckPasswords(e) {
+        if (password !== e)
+            setValidPass(false);
+        else
+            setValidPass(true)
     }
 
     async function SignUp(e) {
         e.preventDefault()
-        console.log(phoneNumber)
-        let user = new CreateUserModel(new User(availableLogin.login, firstName, lastName, email, phoneNumber, 0), new UserPassword(password))
-        console.log(user)
-        if (availableLogin.available && availableLogin.login !== '')
+        let user = new User(availableLogin.login, firstName, lastName, email, phoneNumber, password, 0)
+        if (availableLogin.available && availableLogin.login !== '' && validPass)
             request("User/CreateNewUser", "POST", user).then((result) => console.log(result))
     }
 
@@ -55,7 +57,7 @@ export default function SignUp() {
                             <div className="relative z-0 w-full mb-6 group">
                                 <input type="text" onChange={(e) => CheckLogins(e.target.value)} name="login" className="font-[Poppins] block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="login" className="font-[Poppins] peer-focus:font-medium absolute text-sm text-[#172c66] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Login</label>
-                                <ErrorInput isCorrect={availableLogin.available}/>
+                                <ErrorInput isCorrect={availableLogin.available} text="Login is alredy taken!" />
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
                                 <input type="email" onChange={(e) => setEmail(e.target.value)} name="email" className="font-[Poppins] block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -70,8 +72,9 @@ export default function SignUp() {
                                 <label htmlFor="pass" className="font-[Poppins] peer-focus:font-medium absolute text-sm text-[#172c66] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
-                                <input type="password" onChange={(e) => setRePassword(e.target.value)} name="repass" className="font-[Poppins] block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <input type="password" onChange={(e) => CheckPasswords(e.target.value)} name="repass" className="font-[Poppins] block py-2.5 px-0 w-full text-sm text-[#172c66] bg-transparent border-0 border-b-2 border-[#172c66] appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label htmlFor="repass" className="font-[Poppins] peer-focus:font-medium absolute text-sm text-[#172c66] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Repeat password</label>
+                                <ErrorInput isCorrect={validPass} text="Please input same passwords!" />
                             </div>
                             <button type="submit" className="font-[Poppins] w-[100%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Create</button>
                             <div className="flex gap-2 items-center">
