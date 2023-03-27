@@ -1,6 +1,6 @@
 
 import { useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../../Models/User.ts";
 import { request } from "../../Helpers/Requests";
 import { useIMask } from "react-imask";
@@ -13,6 +13,7 @@ export default function SignUp() {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [password, setPassword] = useState('');
     const [validPass, setValidPass] = useState(true);
+    const navigate = useNavigate()
     const opts = { mask: '+{1} (000) 000-0000' };
     const { ref } = useIMask(opts, {
         onComplete: (e) => { setPhoneNumber(e) }
@@ -20,7 +21,7 @@ export default function SignUp() {
 
     async function CheckLogins(login) {
         if (login !== '')
-            request("User/CheckLogins", "GET", [login], ["login"]).then((result) => setAvailableLogin(result))
+            (await request("User/CheckLogins", "GET", [login], ["login"])).json().then((result) => setAvailableLogin(result))
     }
 
     function CheckPasswords(e) {
@@ -34,7 +35,14 @@ export default function SignUp() {
         e.preventDefault()
         let user = new User(availableLogin.login, firstName, lastName, email, phoneNumber, password, 0)
         if (availableLogin.available && availableLogin.login !== '' && validPass)
-            request("User/CreateNewUser", "POST", user).then((result) => console.log(result))
+            await request("User/CreateNewUser", "POST", user).then((result) => {
+                if (result.status === 200) {
+                    navigate("/workplace")
+                }
+                else {
+                    
+                }
+            })
     }
 
     return (

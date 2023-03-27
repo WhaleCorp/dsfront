@@ -1,15 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getCookie, setObjToCookie } from "../../Helpers/Cookies";
 import { request } from "../../Helpers/Requests";
 export default function Login() {
     const [login, setLogin] = useState('');
     const [pass, setPass] = useState('');
+    const navigate = useNavigate();
+
     async function LogIn(e) {
         e.preventDefault()
-            request("Auth/Auth", "POST", { Login:login, Password:pass })
-            .then((data) => console.log(data))//token here
+            ; (await request("Auth/Auth", "POST", { Login: login, Password: pass })).json()
+                .then((data) => {
+                    setObjToCookie(data)
+                    navigate("/workplace")
+                })
     }
-    
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
