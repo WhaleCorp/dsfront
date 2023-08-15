@@ -11,6 +11,8 @@ import Nav from './Components/Nav';
 import Login from './Components/Account/LogIn';
 import SignUp from './Components/Account/SignUp';
 import WorkPlace from './Components/Account/MonitorPage/WorkPlace';
+import WorkPage from './Components/WorkPage';
+import ErrorPage from './Components/ErrorPage';
 export default function App() {
 
   return (
@@ -23,7 +25,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/controller" element={<Controller />} />
-            <Route path="/workplace" element={<WorkPlace />} />
+            <Route path="/workplace" element={<WorkPage />} />
+            <Route path="/error" element={<ErrorPage />} />
           </Routes>
         </Router>
       </div>

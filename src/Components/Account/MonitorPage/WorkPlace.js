@@ -11,7 +11,6 @@ export default function WorkPlace() {
     //     request('Monitor/All','GET',getCookie("userId"),"userId","r").json().then((result)=>setMonitor(result))
     // }, [])
 
-
     return (
         <div className="flex flex-col w-full justify-around h-full items-center">
             <div className="flex flex-col justify-around w-[90%] gap-4">

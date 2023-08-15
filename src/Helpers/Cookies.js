@@ -17,3 +17,7 @@ export function setObjToCookie(obj) {
         document.cookie = element[0] + "=" + element[1];
     });
 }
+
+export function removeCookie(name){
+    document.cookie=name+"=;"
+}

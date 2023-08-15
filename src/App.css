@@ -25,3 +25,11 @@
   font-style: normal;
   font-weight: normal;
 }
+
+*{
+  font-family: Poppins;
+}
+
+input{
+  width:"1px"
+}
