@@ -12,7 +12,8 @@ export default function CommonTemplate() {
 
 
     function addCol() {
-       
+       setTable([...table,table.length])
+       console.log(table)
     }
 
     useEffect(() => {
@@ -29,8 +30,8 @@ export default function CommonTemplate() {
                 <DateTime />
                 <div className="flex py-2">
                     {
-                        table.map((element, key) => {
-                            return <Table key={key} id={key} setRemoveTableId={setRemoveTableId} />
+                        table.map((e) => {
+                            return <Table key={e} id={e} setRemoveTableId={setRemoveTableId} />
                         })
 
                     }
