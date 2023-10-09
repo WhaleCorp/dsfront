@@ -27,6 +27,7 @@ export default function App() {
             <Route path="/controller" element={<Controller />} />
             <Route path="/workplace" element={<WorkPage />} />
             <Route path="/error" element={<ErrorPage />} />
+            <Route path="/workplace/admin" element={<WorkPage />} />
           </Routes>
         </Router>
       </div>

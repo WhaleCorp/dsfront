@@ -11,7 +11,7 @@ export default function Header({id,removable=true}) {
     return (
         <div id={id} className="flex justify-around w-full">
             <input type="text" value={header} className="w-full text-center text-xl bg-inherit" onChange={(e) => setHeader(e.target.value)} />
-            {removable?<button className="right-0" onClick={removeHeader}>X</button>:null}
+            {removable?<button name="avoid" className="right-0" onClick={removeHeader}>X</button>:null}
         </div>
     )
 }

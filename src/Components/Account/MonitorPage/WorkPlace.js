@@ -4,12 +4,21 @@ import { request } from "../../../Helpers/Requests"
 import PopUp from "./PopUp/PopUp"
 import Monitor from "./Monitor"
 import Templates from "./Templates/Templates"
+import { useStores } from "../../../Store/MainStore"
 export default function WorkPlace() {
-    const [monitor, setMonitor] = useState([])
+    const { MonitorStore } = useStores()
+    const [monitors, setMonitors] = useState([])
     const [isOpen, setIsOpen] = useState(false);
-    // useEffect(() => {
-    //     request('Monitor/All','GET',getCookie("userId"),"userId","r").json().then((result)=>setMonitor(result))
-    // }, [])
+    useEffect(() => {
+        getMonitors()
+        document.querySelector('title').textContent
+            = "Workplace";
+    }, [])
+
+    async function getMonitors(){
+        await MonitorStore.getMonitorsRequest()
+        setMonitors(MonitorStore.getMonitors)
+    }
 
     return (
         <div className="flex flex-col w-full justify-around h-full items-center">
@@ -22,17 +31,14 @@ export default function WorkPlace() {
                 <div>
                     <h1 className="font-[Poppins] text-2xl mb-2">Monitors</h1>
                     <div className="flex justify-around flex-wrap gap-4 md:justify-center">
-                        {monitor.forEach(element => {
-                            <Monitor name={element.Name} />
+                        {monitors.map((element,key) => {
+                            return <Monitor key={key} name={element.code} />
                         })}
-                        <Monitor name="name" />
-                        <Monitor name="name" />
-                        <Monitor name="name" />
                     </div>
                 </div>
                 <div className="border-2 h-[1px] w-full"></div>
                 <h1 className="font-[Poppins] text-2xl mb-2">Templates</h1>
-                <Templates/>
+                <Templates />
             </div>
             <PopUp isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>

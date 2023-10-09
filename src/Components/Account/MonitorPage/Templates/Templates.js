@@ -1,48 +1,103 @@
 import { useStores } from "../../../../Store/MainStore"
-import CommonTemplate from "./CommonTemplate"
-import ImgTemplate from "./ImgTemplate"
-export default function Templates(){    
-    const {TemplateStore} = useStores()
-    function sendInfo(e){
-        e.preventDefault()
-        var seen = []
-        let t = document.getElementById("template").innerHTML
-        t.replace("\"","\'")
-        fetch("https://localhost:7296/Monitor/PostDataToDSPage", {
-            method: "POST",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxIiwibmJmIjoxNjk2NDYxNzk3LCJleHAiOjE2OTY0NjUzOTcsImlhdCI6MTY5NjQ2MTc5NywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzI5NiIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTI5NiJ9.y5G_DPLLetmcrvr8CpbOKEoEfCCmQh28zMvPJcJ1_f0",
-            headers:{
-                'Content-Type': 'text/json',
-                'Accept': 'application/json, text/plain',
-            },
-            body: JSON.stringify(t),
-        }).then(result => console.log(result.json()))
+import { useState, createElement, createRoot } from "react"
+import CreateTemplate from "./CreateTemplate"
+import Text from "./Modules/TextRow/Text"
+import AddButton from "./Modules/AddButton"
+import PopUpCreateTemplate from "../PopUp/PopUpCreateTemplate"
+import { useObserver } from "mobx-react"
+import PopUpSendTemplate from "../PopUp/PopUpSendTemplate"
+import Changer from "./Modules/Changer"
+
+export default function Templates() {
+    const { TemplateStore } = useStores()
+    const [isOpen, setIsOpen] = useState(false)
+    const [redactState, setRedactState] = useState(0)
+    const [isFinish, setIsFinish] = useState(false)
+    const [data, setData] = useState()
+
+    function states() {
+        switch (TemplateStore.getState) {
+            case 1:
+                return (<CreateTemplate />)
+            case 2:
+                return (<Text />)
+            case 3:
+                return (<Text />)
+        }
     }
 
-    function getCircularReplacer() {
-        const ancestors = [];
-        return function (key, value) {
-          if (typeof value !== "object" || value === null) {
-            return value;
-          }
-          // `this` is the object that value is contained in,
-          // i.e., its direct parent.
-          while (ancestors.length > 0 && ancestors.at(-1) !== this) {
-            ancestors.pop();
-          }
-          if (ancestors.includes(value)) {
-            return "[Circular]";
-          }
-          ancestors.push(value);
-          return value;
-        };
-      }
+    async function sendInfo(e) {
+        e.preventDefault()
+        let node = document.getElementById("template").cloneNode(true)
+        node.setAttribute("id", "clone")
+        await removeButtons(node)
+        setData(node)
+        setIsFinish(true)
+        //await setName(data)
+        //TemplateStore.postDataToDsPAge(data)
+    }
 
-    return(
+    function transferComputedStyle(node) {
+        var cs = getComputedStyle(node, null);
+        for (let i = 0; i < cs.length; i++) {
+            var s = cs[i] + "";
+            node.style[s] = cs[s];
+        }
+        console.log(node)
+    }
+
+    function transferAll() {
+        var all = document.getElementsByName("change");
+        var i;
+        for (i = 0; i < all.length; i++) {
+            console.log(all[i].hasAttribute("name"))
+            transferComputedStyle(all[i]);
+        }
+    }
+
+    /**
+     * @param {NodeListOf<HTMLElement>} node
+     */
+    async function setName(node) {
+        for (let i = 0; node.childElementCount; i++) {
+            if (node.children[i].hasAttribute("name")) {
+                if (node.children[i].getAttribute("name") !== "avoid")
+                    node.children[i].setAttribute("name", "change")
+            }
+            else
+                node.children[i].setAttribute("name", "change")
+            if (node.children[i].hasChildNodes())
+                await setName(node.children[i])
+        }
+    }
+
+    async function removeButtons(node) {
+        for (let i = 0; node.childElementCount; i++) {
+            if (node.children[i] === undefined) return
+            if (node.children[i].hasChildNodes())
+                await removeButtons(node.children[i])
+
+            if (node.children[i].hasAttribute("name")) {
+                if (node.children[i].getAttribute("name") === "avoid")
+                    node.children[i].remove()
+            }
+
+        }
+    }
+
+    return useObserver(() => (
         <div>
             {/* <ImgTemplate/> */}
-            <CommonTemplate/>
-            <button className="border-2 rounded-lg border-black w-[20%] mt-5" onClick={sendInfo}>Send</button>
+            <div id="change" className="flex bg-black text-2xl text-white">jsdhfjks</div>
+            <div className="flex flex-col">
+                {
+                    TemplateStore.getState === 0 ? !isOpen ? <AddButton event={setIsOpen} /> : <PopUpCreateTemplate isOpen={isOpen} setIsOpen={setIsOpen} /> : states()
+                }
+            </div>
+            <button className="font-[Poppins] w-[20%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center" onClick={sendInfo}>Send</button>
+
+            {isFinish ? <PopUpSendTemplate data={data} setIsFinish={setIsFinish} /> : null}
+            <Changer />
         </div>
-    )
+    ))
 }

@@ -7,8 +7,8 @@ import UserStore from "./Stores/UserStore";
 
 class MainStore {
    constructor() {
-      this.TemplateStore = new TemplateStore()
       this.UserStore = new UserStore()
+      this.TemplateStore = new TemplateStore(this.UserStore)
       this.MonitorStore = new MonitorStore(this.UserStore)
    }
 }

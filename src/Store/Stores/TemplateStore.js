@@ -3,32 +3,35 @@ import { Template, RowModel, TableModel } from "../../Models/Template.ts";
 import { request } from "../../Helpers/Requests.js";
 
 export default class TemplateStore {
-    constructor() {
+    constructor(user) {
         makeAutoObservable(this)
+        this.user = user
     }
 
+    user
     state = 0
     module = []
     openAdd = false
     id = 0
-    monitors = []
-    token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxIiwibmJmIjoxNjk2NDYxNzk3LCJleHAiOjE2OTY0NjUzOTcsImlhdCI6MTY5NjQ2MTc5NywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzI5NiIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTI5NiJ9.y5G_DPLLetmcrvr8CpbOKEoEfCCmQh28zMvPJcJ1_f0"
+    code = ""
 
     async postDataToDsPAge(data) {
-        await fetch("http://localhost:5296/Monitor/PostDataToDSPage", {
+        await fetch("http://localhost:5296/Monitor/PostDataToDSPage?code=" + this.code, {
             method: "POST",
-            Authorization: this.token,
+
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json, text/plain',
+                'Authorization': this.user.getToken,
 
             },
             body: JSON.stringify(data)
         }).then(response => console.log(response.status))
     }
 
-    getMonitors = () => {
-
+    setCode = (code) => {
+        console.log(code)
+        this.code = code
     }
 
     updateOpenAdd = (openAdd) => {
@@ -43,10 +46,6 @@ export default class TemplateStore {
         this.module.push(module)
     }
 
-    get getMonitors() {
-        return this.monitors;
-    }
-
     get getId() {
         this.id += 1
         return this.id
@@ -59,8 +58,6 @@ export default class TemplateStore {
     get getModule() {
         return this.module
     }
-
-
 
     get getState() {
         return this.state

@@ -12,7 +12,7 @@ export default function CreateTemplate() {
     const [isOpen, setIsOpen] = useState(false)
 
     return useObserver(() => (
-        <div id="template" className="border-2 rounded-md border-black flex flex-col w-full pt-2">
+        <div id="template" className="border-2 rounded-md border-black flex flex-col w-full py-4">
             {
                 TemplateStore.getModule.map((e,key) => {
                     return <div key={key}><>{e}</></div>

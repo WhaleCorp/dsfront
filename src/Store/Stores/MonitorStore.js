@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import { request } from "../../Helpers/Requests";
-import UserStore from "./UserStore";
 
 export default class MonitorStore {
     constructor(user) {
@@ -10,8 +9,20 @@ export default class MonitorStore {
     user
     monitors = []
 
-    getMonitors() {
-        request('Monitor/All', 'GET', "", this.user.getTekon()).json().then((result) => this.monitors = result)
+    async getMonitorsRequest() {
+        await fetch("https://localhost:7296/Monitor/GetMonitors", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : this.user.getToken
+            },
+        }).then(response => response.json())
+            .then(json => this.monitors = json)
+            .catch(error => console.error(error))
+    }
+
+    get getMonitors() {
+        return this.monitors;
     }
 
 }

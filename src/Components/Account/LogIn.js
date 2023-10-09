@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getCookie, removeCookie, setObjToCookie } from "../../Helpers/Cookies";
-import { request } from "../../Helpers/Requests";
+import { useStores } from "../../Store/MainStore";
 export default function Login() {
+    const { UserStore, MonitorStore } = useStores()
     const [login, setLogin] = useState('');
     const [pass, setPass] = useState('');
     const navigate = useNavigate();
@@ -10,13 +10,11 @@ export default function Login() {
     async function LogIn(e) {
         e.preventDefault()
         console.log(login, pass);
-        await (await request("Auth/Auth", "POST", { Login: login, Password: pass })).json().then((result) => {
-            console.log(result)
-            if (result.token !== null) {
-                setObjToCookie({ "token": result.token })
-                navigate("/workplace")
-            }
-        })
+        await UserStore.signIn(login, pass)
+        if (UserStore.getStatus === 200) {
+            await MonitorStore.getMonitorsRequest()
+            navigate("/workplace")
+        }
     }
 
     return (

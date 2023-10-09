@@ -6,8 +6,6 @@ export default function PopUpCreateTemplate({ isOpen, setIsOpen, setRedactState 
         setIsOpen(false)
     }
 
-
-
     return (
         <div className="flex self-center w-full">
             {
