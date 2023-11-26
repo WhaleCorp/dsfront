@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
+import useLongPress from "../../../../../Helpers/UseLongPress";
+import { useStores } from "../../../../../Store/MainStore";
 export function DateTime() {
+    const { ChangerStore } = useStores()
     const [dateState, setDateState] = useState(new Date());
+    const change = useLongPress({ onLongPress: (ev) => ChangerStore.setObject(ev.target) })
+
     useEffect(() => {
         setInterval(() => setDateState(new Date()), 30000);
     }, []);
+
     return (
-        <div className="underline flex justify-around">
+        <div id="date" className="underline flex justify-around" {...change}>
             <p>
                 {' '}
                 {dateState.toLocaleDateString('en-GB', {

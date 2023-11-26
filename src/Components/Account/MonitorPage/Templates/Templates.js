@@ -7,69 +7,46 @@ import PopUpCreateTemplate from "../PopUp/PopUpCreateTemplate"
 import { useObserver } from "mobx-react"
 import PopUpSendTemplate from "../PopUp/PopUpSendTemplate"
 import Changer from "./Modules/Changer"
+import Ads from "../../AdminModules/Ads"
+import ReadyToUse from "./ReadyToUse"
+import FirstChange from "./Change/FirstChange"
 
 export default function Templates() {
-    const { TemplateStore } = useStores()
+    const { TemplateStore, ChangerStore } = useStores()
     const [isOpen, setIsOpen] = useState(false)
     const [redactState, setRedactState] = useState(0)
     const [isFinish, setIsFinish] = useState(false)
-    const [data, setData] = useState()
+    const [data, setData] = useState({ clone: "", raw: "" })
 
     function states() {
         switch (TemplateStore.getState) {
             case 1:
                 return (<CreateTemplate />)
             case 2:
-                return (<Text />)
+                return (<ReadyToUse />)
             case 3:
-                return (<Text />)
+                return (<FirstChange />)
+            case 4:
+                return (<Ads />)
         }
     }
 
     async function sendInfo(e) {
         e.preventDefault()
-        let node = document.getElementById("template").cloneNode(true)
-        node.setAttribute("id", "clone")
-        await removeButtons(node)
-        setData(node)
+        if (TemplateStore.getState === 1||TemplateStore.getState===3) {
+            let raw = document.getElementById("template").outerHTML
+            let clone = document.getElementById("template").cloneNode(true)
+            clone.setAttribute("id", "clone")
+            await removeButtons(clone)
+            setData({ clone: clone, raw: raw })
+        }
+        else if (TemplateStore.getState === 4) {
+
+        }
         setIsFinish(true)
-        //await setName(data)
-        //TemplateStore.postDataToDsPAge(data)
     }
 
-    function transferComputedStyle(node) {
-        var cs = getComputedStyle(node, null);
-        for (let i = 0; i < cs.length; i++) {
-            var s = cs[i] + "";
-            node.style[s] = cs[s];
-        }
-        console.log(node)
-    }
 
-    function transferAll() {
-        var all = document.getElementsByName("change");
-        var i;
-        for (i = 0; i < all.length; i++) {
-            console.log(all[i].hasAttribute("name"))
-            transferComputedStyle(all[i]);
-        }
-    }
-
-    /**
-     * @param {NodeListOf<HTMLElement>} node
-     */
-    async function setName(node) {
-        for (let i = 0; node.childElementCount; i++) {
-            if (node.children[i].hasAttribute("name")) {
-                if (node.children[i].getAttribute("name") !== "avoid")
-                    node.children[i].setAttribute("name", "change")
-            }
-            else
-                node.children[i].setAttribute("name", "change")
-            if (node.children[i].hasChildNodes())
-                await setName(node.children[i])
-        }
-    }
 
     async function removeButtons(node) {
         for (let i = 0; node.childElementCount; i++) {
@@ -88,7 +65,6 @@ export default function Templates() {
     return useObserver(() => (
         <div>
             {/* <ImgTemplate/> */}
-            <div id="change" className="flex bg-black text-2xl text-white">jsdhfjks</div>
             <div className="flex flex-col">
                 {
                     TemplateStore.getState === 0 ? !isOpen ? <AddButton event={setIsOpen} /> : <PopUpCreateTemplate isOpen={isOpen} setIsOpen={setIsOpen} /> : states()
@@ -97,7 +73,9 @@ export default function Templates() {
             <button className="font-[Poppins] w-[20%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center" onClick={sendInfo}>Send</button>
 
             {isFinish ? <PopUpSendTemplate data={data} setIsFinish={setIsFinish} /> : null}
-            <Changer />
+            {
+                ChangerStore.getId !== 11 ? <Changer /> : null
+            }
         </div>
     ))
 }

@@ -1,24 +1,28 @@
 import { makeAutoObservable } from "mobx";
 import { request } from "../../Helpers/Requests";
+import Cookies from "js-cookie";
 
 export default class MonitorStore {
-    constructor(user) {
+    constructor() {
         makeAutoObservable(this)
-        this.user = user
     }
-    user
     monitors = []
+    checkingUser
 
     async getMonitorsRequest() {
-        await fetch("https://localhost:7296/Monitor/GetMonitors", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : this.user.getToken
-            },
-        }).then(response => response.json())
+        await request("Monitor/GetMonitors", "GET", null, Cookies.get("token"))
+            .then(response => response.json())
             .then(json => this.monitors = json)
             .catch(error => console.error(error))
+    }
+
+    async getUserMonitors(id) {
+        this.checkingUser=id
+        await request("Monitor/GetMonitor?userid="+id, "GET", null, Cookies.get("token"))
+            .then(response => response.json())
+            .then(json => this.monitors = json)
+            .catch(error => console.error(error))
+            
     }
 
     get getMonitors() {

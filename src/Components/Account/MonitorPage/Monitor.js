@@ -5,6 +5,7 @@ export default function Monitor({ name }) {
 
     function clicked(e) {
         e.preventDefault()
+        TemplateStore.getMonitorData(name)
         TemplateStore.setCode(name)
     }
 
