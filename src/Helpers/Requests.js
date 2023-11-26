@@ -1,5 +1,5 @@
 export function request(route, method, body, token = " ") {
-    let url = "https://localhost:7296/" + route;
+    let url = "https://ds.kaykov.co/" + route;
     let obj = {
         method: method,
         headers: {},
