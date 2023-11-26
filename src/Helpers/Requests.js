@@ -3,7 +3,7 @@ export function request(route, method, body, token = " ") {
     let obj = {
         method: method,
         headers: {},
-        mode:"no-cors"
+        mode:"cors"
     }
 
     if (token !== " ") {
