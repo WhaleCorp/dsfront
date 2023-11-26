@@ -2,7 +2,11 @@ export function request(route, method, body, token = " ") {
     let url = "https://ds.kaykov.co/" + route;
     let obj = {
         method: method,
-        headers: {},
+        headers: {
+            'Access-Control-Allow-Origin': 'https://digitalsign.kaykov.co',
+            'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        },
         mode:"cors"
     }
 
