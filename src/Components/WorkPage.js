@@ -1,11 +1,14 @@
-import { getCookie } from "../Helpers/Cookies"
+
+import Cookies from "js-cookie"
 import WorkPlace from "./Account/MonitorPage/WorkPlace"
 import ErrorPage from "./ErrorPage"
+import Nav from "./Nav"
 
 export default function WorkPage() {
     return (
         <div>
-            {getCookie("token") !== ""?<WorkPlace/>:<ErrorPage/>}
+            <Nav/>
+            {Cookies.get("token") !== ""?<WorkPlace/>:<ErrorPage/>}
         </div>
     )
 }

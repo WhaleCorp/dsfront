@@ -4,12 +4,14 @@ import React from "react"
 import { observable, computed, autorun, reaction, get, action } from 'mobx';
 import MonitorStore from "./Stores/MonitorStore";
 import UserStore from "./Stores/UserStore";
+import ChangerStore from "./Stores/ChangerStore";
 
 class MainStore {
    constructor() {
-      this.TemplateStore = new TemplateStore()
       this.UserStore = new UserStore()
-      this.MonitorStore = new MonitorStore(this.UserStore)
+      this.TemplateStore = new TemplateStore()
+      this.MonitorStore = new MonitorStore()
+      this.ChangerStore = new ChangerStore()
    }
 }
 
