@@ -47,7 +47,7 @@ export default function WorkPlace() {
                     <h1 className="font-[Poppins] text-2xl mb-2">Monitors</h1>
                     <div className="flex justify-around flex-wrap gap-4 md:justify-center">
                         {MonitorStore.getMonitors.map((element, key) => {
-                            return <Monitor key={key} name={element.code} />
+                            return <Monitor key={key} name={element.code} orientation={element.orientation}/>
                         })}
                     </div>
                 </div>

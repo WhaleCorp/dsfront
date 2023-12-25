@@ -13,7 +13,7 @@ export default class MonitorStore {
         await request("Monitor/GetMonitors", "GET", null, Cookies.get("token"))
             .then(response => response.json())
             .then(json => this.monitors = json)
-            .catch(error => console.error(error))
+            .catch(error => console.error("getMonitorRequest",error))
     }
 
     async getUserMonitors(id) {
@@ -23,6 +23,13 @@ export default class MonitorStore {
             .then(json => this.monitors = json)
             .catch(error => console.error(error))
             
+    }
+
+    async putUpdateMonitorOrientation(orientation,code){
+        await request("Monitor/PutUpdateOrientation","PUT",{orientation:orientation,code:code},Cookies.get("token"))
+        .then(response=>response.text())
+        .then(text=>console.log(text))
+        .catch(error=>console.error("putUpdateMonitorOrientation",error))
     }
 
     get getMonitors() {

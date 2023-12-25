@@ -14,9 +14,11 @@ export default class TemplateStore {
     id = 0
     code = ""
     template
+    orientation = "horizontal"
+    ads
 
     async postDataToDsPAge(data) {
-        await fetch("https://ds.kaykov.co/Monitor/PostDataToDSPage", {
+        await fetch("https://localhost:7296/Monitor/PostDataToDSPage", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -26,6 +28,12 @@ export default class TemplateStore {
             body: JSON.stringify(data),
         }).then(response => console.log(response))
         .catch((error)=>console.log(error))
+    }
+
+    async postSendAds(){
+        await request("Monitor/PostAddAds","POST",{ads:this.ads,orientation:this.orientation},Cookies.get("token")).then((result)=>{
+            console.log(result.json())
+        })
     }
 
     async getMonitorData(code){
@@ -51,6 +59,14 @@ export default class TemplateStore {
 
     updateModule = (module) => {
         this.module.push(module)
+    }
+
+    setOrientation(orientation){
+        this.orientation = orientation;
+    }
+
+    setAds(ads){
+        this.ads = ads
     }
 
     get getCode(){
