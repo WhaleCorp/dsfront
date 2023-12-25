@@ -18,7 +18,7 @@ export default class TemplateStore {
     ads
 
     async postDataToDsPAge(data) {
-        await fetch("https://localhost:7296/Monitor/PostDataToDSPage", {
+        await fetch("https://ds.kaykov.co/Monitor/PostDataToDSPage", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
