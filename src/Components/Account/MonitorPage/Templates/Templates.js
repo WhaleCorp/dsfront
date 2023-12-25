@@ -10,12 +10,14 @@ import Changer from "./Modules/Changer"
 import Ads from "../../AdminModules/Ads"
 import ReadyToUse from "./ReadyToUse"
 import FirstChange from "./Change/FirstChange"
+import PopUpSendAds from "../PopUp/PopUpSendAds"
 
 export default function Templates() {
     const { TemplateStore, ChangerStore } = useStores()
     const [isOpen, setIsOpen] = useState(false)
     const [redactState, setRedactState] = useState(0)
     const [isFinish, setIsFinish] = useState(false)
+    const [isTemplate,setIsTemplate]= useState(false)
     const [data, setData] = useState({ clone: "", raw: "" })
 
     function states() {
@@ -27,7 +29,7 @@ export default function Templates() {
             case 3:
                 return (<FirstChange />)
             case 4:
-                return (<Ads />)
+                return (<Ads/>)
         }
     }
 
@@ -39,9 +41,10 @@ export default function Templates() {
             clone.setAttribute("id", "clone")
             await removeButtons(clone)
             setData({ clone: clone, raw: raw })
+            setIsTemplate(true)
         }
         else if (TemplateStore.getState === 4) {
-
+            setIsTemplate(false)
         }
         setIsFinish(true)
     }
@@ -72,7 +75,7 @@ export default function Templates() {
             </div>
             <button className="font-[Poppins] w-[20%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center" onClick={sendInfo}>Send</button>
 
-            {isFinish ? <PopUpSendTemplate data={data} setIsFinish={setIsFinish} /> : null}
+            {isFinish ? isTemplate?<PopUpSendTemplate data={data} setIsFinish={setIsFinish} /> : <PopUpSendAds setIsFinish={setIsFinish}/>:null}
             {
                 ChangerStore.getId !== 11 ? <Changer /> : null
             }
