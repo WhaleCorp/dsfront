@@ -45,7 +45,7 @@ export default function FirstChange() {
                 <div id="ads" className="h-[50%] bg-contain bg-no-repeat bg-center">
                     <input name="avoid" type="file" onChange={e => setBgImg(e.target.files[0])} />
                 </div>
-                <div className="bg-[url('/public/smallFrame.jpeg')] bg-contain bg-center bg-no-repeat h-[50%]">
+                <div className="bg-[url('/public/smallFrame.jpeg')] bg-contain bg-center bg-top bg-no-repeat h-[50%]">
                     <div id="hor-fr" className="flex flex-col p-7 justify-self-start">
                         {rowS.map((e, key) => {
                             return <Header key={key} id={e.id + e.id.toString(2) + "h"} />
@@ -56,7 +56,7 @@ export default function FirstChange() {
                     </div>
                 </div>
             </div>
-            <div className="bg-[url('/public/bigFrame.jpeg')] bg-center bg-no-repeat bg-contain w-[45%] justify-self-start">
+            <div className="bg-[url('/public/bigFrame.jpeg')] bg-center bg-no-repeat bg-top bg-contain w-[43.5%] justify-self-start">
                 <div id="ver-fr" className="p-9 self-start">
                     {row.map((e, key) => {
                         return <Header key={key} id={e.id + e.id.toString(2) + "h"} />

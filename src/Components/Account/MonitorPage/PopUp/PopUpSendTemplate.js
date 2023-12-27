@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useStores } from "../../../../Store/MainStore"
+import DomToImage from "dom-to-image"
 
 export default function PopUpSendTemplate({ setIsFinish, data }) {
     const { TemplateStore } = useStores()
@@ -19,9 +20,17 @@ export default function PopUpSendTemplate({ setIsFinish, data }) {
         e.preventDefault()
         await setName(document.getElementById('clone'))
         transferAll()
-        TemplateStore.postDataToDsPAge({ RawData: data.raw, Data: document.getElementById('clone').outerHTML, Code: TemplateStore.getCode })
-       // console.log({ raw: data.raw, data: document.getElementById('clone').outerHTML, code: TemplateStore.getCode })
-        setIsFinish(false)
+        var node = document.getElementById('test');
+        console.log(node, "node")
+        await DomToImage.toPng(node)
+            .then(function (dataUrl) {
+                TemplateStore.postDataToDsPAge({ RawData: data.raw, Data: dataUrl, Code: TemplateStore.getCode })
+                setIsFinish(false)
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+            });
+        // console.log({ raw: data.raw, data: document.getElementById('clone').outerHTML, code: TemplateStore.getCode })
     }
 
     function transferComputedStyle(node) {
@@ -51,14 +60,14 @@ export default function PopUpSendTemplate({ setIsFinish, data }) {
         else
             node.setAttribute("name", "change")
         if (node.hasChildNodes())
-            for (let i = 0; i<node.childElementCount; i++) {
+            for (let i = 0; i < node.childElementCount; i++) {
                 await setName(node.children[i])
             }
     }
 
     return (
         <div className="fixed bg-gray-100 top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto h-full">
-            <div className="flex w-full h-auto md:h-auto justify-around">
+            <div className="flex w-full h-full md:h-full justify-around">
                 <div id="test" className="relative bg-white rounded-lg w-[90%] shadow">
 
                 </div>
