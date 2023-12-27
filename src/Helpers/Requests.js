@@ -1,9 +1,9 @@
 export function request(route, method, body, token = " ") {
-    let url = "https://ds.kaykov.co/" + route;
+    let url = "https://localhost:7296/" + route;
     let obj = {
         method: method,
         headers: {
-            'Access-Control-Allow-Origin': 'https://ds.kaykov.co',
+            'Access-Control-Allow-Origin': 'https://localhost:7296',
             'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
             'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         },

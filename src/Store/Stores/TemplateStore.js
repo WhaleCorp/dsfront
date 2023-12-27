@@ -32,7 +32,7 @@ export default class TemplateStore {
 
     async postSendAds(){
         await request("Monitor/PostAddAds","POST",{ads:this.ads,orientation:this.orientation},Cookies.get("token")).then((result)=>{
-            console.log(result.json())
+            console.log(result)
         })
     }
 
