@@ -12,8 +12,8 @@ export default function Login() {
         console.log(login, pass);
         await UserStore.signIn(login, pass)
         if (UserStore.getStatus === 200) {
-            await MonitorStore.getMonitorsRequest()
             navigate("/workplace")
+            await MonitorStore.getMonitorsRequest()
         }
     }
 

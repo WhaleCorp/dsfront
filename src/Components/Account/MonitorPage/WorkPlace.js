@@ -9,8 +9,7 @@ import { useObserver } from "mobx-react"
 import { useNavigate } from "react-router-dom"
 
 export default function WorkPlace() {
-    const { MonitorStore, UserStore } = useStores()
-    const [monitors, setMonitors] = useState([])
+    const { MonitorStore } = useStores()
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate()
     useEffect(() => {
@@ -38,7 +37,7 @@ export default function WorkPlace() {
                 {Cookies.get('role')!==undefined?Cookies.get('role').toLowerCase() === "admin" ?
                     <div>
                         <div className="border-2 h-[1px] mb-4 w-full"></div>
-                        <h1 className="font-[Poppins] text-2xl mb-2">Templates</h1>
+                        <h1 className="font-[Poppins] text-2xl mb-2">Users</h1>
                         <UserTable />
                     </div>
                     : null:null}
