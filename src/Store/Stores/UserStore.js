@@ -33,7 +33,7 @@ export default class UserStore {
 
     async linkMonitor(code) {
         await request("Monitor/PutLinkMonitorToUser?code=" + code, "GET", null, Cookies.get("token")).then((result) => {
-            console.log(result.text())
+            console.log(result.json())
             if (result.status === 200) {
                 this.status = 200
             }
