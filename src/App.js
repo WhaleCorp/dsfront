@@ -6,10 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import Main from './Components/Main';
-import Nav from './Components/Nav';
 import Login from './Components/Account/LogIn';
 import SignUp from './Components/Account/SignUp';
-import WorkPlace from './Components/Account/MonitorPage/WorkPlace';
 import WorkPage from './Components/WorkPage';
 import ErrorPage from './Components/ErrorPage';
 import Footer from './Components/Footer';
