@@ -17,15 +17,8 @@ export default class TemplateStore {
     ads
 
     async postDataToDsPAge(data) {
-        await fetch("https://ds.kaykov.co/Monitor/PostDataToDSPage", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': Cookies.get("token"),
-            },
-            body: JSON.stringify(data),
-        }).then(response => console.log(response))
+        await request("Monitor/PostDataToDSPage","POST",data,Cookies.get("token") )
+        .then(response => console.log(response))
         .catch((error)=>console.log(error))
     }
 
