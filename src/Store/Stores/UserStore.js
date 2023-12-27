@@ -11,9 +11,8 @@ export default class UserStore {
     role = Cookies.get('role') || " "
     text = "Sign In" || "jasbd"
     status = 400
-    columnNames = ["First name", "Second name", "Phone number", "Email", "Monitors"]
+    columnNames = ["First name", "Second name", "Email", "Phone number", "Monitors"]
     users = []
-    status = 400
 
     async signIn(login, pass) {
         await request("Auth/SignIn", "POST", { login: login, password: pass }).then((result) => {
@@ -100,9 +99,5 @@ export default class UserStore {
 
     get getToken() {
         return this.token
-    }
-
-    get getStatus() {
-        return this.status
     }
 }
