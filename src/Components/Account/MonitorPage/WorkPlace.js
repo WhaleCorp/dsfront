@@ -27,12 +27,17 @@ export default function WorkPlace() {
         await MonitorStore.getMonitorsRequest()
     }
 
+    async function getMonitorsButton(e) {
+        e.preventDefault()
+        await MonitorStore.getMonitorsRequest()
+    }
+
     return useObserver(()=> (
         <div className="flex flex-col w-full justify-around h-full items-center">
             <div className="flex flex-col justify-around w-[90%] gap-4">
                 <div className="flex justify-end gap-4 w-full md:justify-center">
                     <button onClick={() => setIsOpen(true)} className="font-[Poppins] w-[25%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Add Monitor</button>
-                    <button className="font-[Poppins] w-[25%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Update Monitors</button>
+                    <button onClick={getMonitorsButton} className="font-[Poppins] w-[25%] mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Update Monitors</button>
                 </div>
                 {Cookies.get('role')!==undefined?Cookies.get('role').toLowerCase() === "admin" ?
                     <div>
