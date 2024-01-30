@@ -14,21 +14,24 @@ export default class UserStore {
     columnNames = ["First name", "Second name", "Email", "Phone number", "Monitors"]
     users = []
 
-    async signIn(login, pass) {
-        await request("Auth/SignIn", "POST", { login: login, password: pass }).then((result) => {
-            result.json().then(result => {
-                if (result.token !== "") {
-                    console.log(result)
-                    this.token = "Bearer " + result.token
-                    Cookies.set('token', 'Bearer ' + result.token, { expires: 1 / 24 })
-                    Cookies.set('role', result.role, { expires: 1 / 24 })
-                    this.status = 200
-                }
-                else {
-                    alert("Incorrect password or login")
-                }
+     signIn(login, pass) {
+        return new Promise((resolve,reject)=>{
+            request("Auth/SignIn", "POST", { login: login, password: pass }).then((result) => {
+                result.json().then(result => {
+                    if (result.token !== "") {
+                        this.token = "Bearer " + result.token
+                        Cookies.set('token', 'Bearer ' + result.token, { expires: 1 / 24 })
+                        Cookies.set('role', result.role, { expires: 1 / 24 })
+                        this.status = 200
+                        resolve(200)
+                    }
+                    else {
+                        alert("Incorrect password or login")
+                    }
+                })
             })
         })
+        
     }
 
     async linkMonitor(code) {

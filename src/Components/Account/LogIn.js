@@ -10,11 +10,13 @@ export default function Login() {
     async function LogIn(e) {
         e.preventDefault()
         console.log(login, pass);
-        await UserStore.signIn(login, pass)
-        if (UserStore.getStatus === 200) {
-            navigate("/workplace")
-            await MonitorStore.getMonitorsRequest()
-        }
+        UserStore.signIn(login, pass).then((result) => {
+            if (result === 200) {
+                navigate("/workplace")
+                console.log("kek")
+                MonitorStore.getMonitorsRequest()
+            }
+        })
     }
 
     return (

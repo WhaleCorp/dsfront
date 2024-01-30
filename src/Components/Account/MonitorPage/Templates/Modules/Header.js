@@ -14,8 +14,8 @@ export default function Header({ id, removable = true }) {
 
     return (
         <div id={id === undefined ? Math.random() * 10 : id} className="flex justify-around w-full" {...change}>
-            <p className="w-full text-center bg-inherit text-xl 3xl:text-9xl">Table Header</p>
-            {removable ? <button name="avoid" className="right-0 3xl:text-9xl" onClick={removeHeader}>X</button> : null}
+            <p className="w-full text-center bg-inherit text-xl 3xl:text-9xl smm:text-xxs">Table Header</p>
+            {removable ? <button name="avoid" className="right-0 3xl:text-9xl smm:text-xxs" onClick={removeHeader}>X</button> : null}
         </div>
     )
 }

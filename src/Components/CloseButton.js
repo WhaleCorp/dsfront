@@ -8,6 +8,6 @@ const {TemplateStore}=useStores()
         TemplateStore.updateState(0)
     }
     return(
-        <button name="avoid" className="absolute right-5 text-2xl" onClick={close}>X</button>
+        <button name="avoid" className="absolute right-5 text-2xl smm:text-base" onClick={close}>X</button>
     )
 }

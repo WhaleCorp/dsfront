@@ -43,7 +43,9 @@ export default function WorkPlace() {
                     <div>
                         <div className="border-2 h-[1px] mb-4 w-full"></div>
                         <h1 className="font-[Poppins] text-2xl mb-2">Users</h1>
-                        <UserTable />
+                        <div className=" overflow-x-auto">
+                            <UserTable />
+                        </div>
                     </div>
                     : null:null}
                 <div className="border-2 h-[1px] w-full"></div>

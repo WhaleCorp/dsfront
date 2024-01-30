@@ -21,10 +21,10 @@ export default function Monitor({ name,orientation }) {
             </div>
             <img className="w-24" src="/monitor.png" alt="monitor" />
 
-            <div className="mb-3 flex gap-2">
-                <label htmlFor="orientation">Orientation:</label>
+            <div className="mb-3 mx-1 flex gap-2 smm:gap-1 smm:text-sm">
+                <label className="w-[50%]" htmlFor="orientation">Orientation:</label>
 
-                <select name="orientation" id="orientation" defaultValue={orientation} onChange={updateMonitorOrientation}>
+                <select className="w-[50%]" name="orientation" id="orientation" defaultValue={orientation} onChange={updateMonitorOrientation}>
                     <option value="vertical">Vertical</option>
                     <option value="horizontal">Horizontal</option>
                 </select>

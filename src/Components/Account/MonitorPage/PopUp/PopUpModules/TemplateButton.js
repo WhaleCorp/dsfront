@@ -9,7 +9,7 @@ export default function TemplateButton({ text, buttonText, state }) {
 
     return (
         <div className="w-[25%] flex flex-col justify-between">
-            <p className="text-xl text-center mt-2">
+            <p className="md:text-xl smm:text-sm text-center mt-2">
                 {text}
             </p>
             <button onClick={updateState} className="mt-2 border-2 border-blue-600 hover:scale-105 rounded-md p-1 w-full">

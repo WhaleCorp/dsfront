@@ -40,29 +40,31 @@ export default function FirstChange() {
     }, [bgImg])
 
     return (
-        <div id="template" className="flex w-full h-screen justify-center">
-            <div className="flex flex-col w-[55%] h-full self-end">
-                <div id="ads" className="h-[50%] bg-contain bg-no-repeat bg-center">
-                    <input name="avoid" type="file" onChange={e => setBgImg(e.target.files[0])} />
+        <div id="template" className="flex w-full md:h-screen smm:h-[25vh] justify-center">
+            <div className="flex flex-col w-[57%] h-full">
+                <div id="ads" className="h-[50%] bg-contain w-full bg-no-repeat bg-center">
+                    {/* <input className="smm:text-xs md:text-xl" name="avoid" type="file" onChange={e => setBgImg(e.target.files[0])} /> */}
                 </div>
-                <div className="bg-[url('/public/smallFrame.jpeg')] bg-contain bg-center bg-top bg-no-repeat h-[50%]">
-                    <div id="hor-fr" className="flex flex-col p-7 justify-self-start">
+                <div className="h-[50%] w-full relative">
+                    <img src="smallFrame.jpeg" className="absolute w-full h-[70%] items-end bottom-0"/>
+                    <div id="hor-fr" className="absolute bottom-0 w-full z-10 h-[70%] flex flex-col md:p-10 smm:pt-2 justify-self-start">
                         {rowS.map((e, key) => {
                             return <Header key={key} id={e.id + e.id.toString(2) + "h"} />
                         })}
                         <div name="avoid" className="flex justify-around">
-                            <button onClick={addRowS} className="border-2 bg-white border-blue-600 rounded-lg w-[40%] self-center text-black self-end 3xl:text-9xl">Add Text</button>
+                            <button onClick={addRowS} className="border-2 bg-white border-blue-600 rounded-lg w-[40%] smm:w-[50%] self-center text-black self-end 3xl:text-9xl smm:text-xxs">Add Text</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="bg-[url('/public/bigFrame.jpeg')] bg-center bg-no-repeat bg-top bg-contain w-[43.5%] justify-self-start">
-                <div id="ver-fr" className="p-9 self-start">
+            <div className="w-[43%] h-full relative">
+                <img src="bigFrame.jpeg" className="absolute w-full h-full bottom-0 left-0"/>
+                <div id="ver-fr" className="smm:pt-3 w-full h-full md:pt-11 absolute top-0 bottom-0 flex flex-col justify-center">
                     {row.map((e, key) => {
-                        return <Header key={key} id={e.id + e.id.toString(2) + "h"} />
+                        return <Header key={key} id={e.id + e.id.toString(2) + "v"} />
                     })}
                     <div name="avoid" className="flex justify-around">
-                        <button onClick={addRow} className="border-2 bg-white border-blue-600 rounded-lg w-[40%] self-center text-black self-end 3xl:text-9xl">Add Text</button>
+                        <button onClick={addRow} className="border-2 bg-white border-blue-600 rounded-lg w-[40%] smm:w-[60%] self-center text-black self-end 3xl:text-9xl smm:text-xxs">Add Text</button>
                     </div>
                 </div>
             </div>

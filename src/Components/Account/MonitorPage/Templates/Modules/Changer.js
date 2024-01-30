@@ -96,9 +96,9 @@ export default function Changer({ obj }) {
         <div className="absolute z-10 bg-white rounded-md" style={{ top: ChangerStore.getPosition.top + changerOffsetHeight, left: ChangerStore.getPosition.left }}>
             <button className="absolute z-10 right-1 text-xl" onClick={close}>X</button>
             <div className="flex gap-2 p-1 border-2 rounded-md border-black gap-2">
-                <SketchPicker color={color} onChange={setColor} />
+                {/* <SketchPicker color={color} onChange={setColor} /> */}
                 <div className="flex flex-col gap-2">
-                    <div>
+                    {/* <div>
                         <label className="relative inline-flex items-center cursor-pointer" onChange={toggleSwitch}>
                             <span className="mr-3 text-sm font-medium text-gray-900">Background color</span>
                             <div className="relative inline-flex items-center cursor-pointer">
@@ -117,7 +117,7 @@ export default function Changer({ obj }) {
                             <label>Background img</label>
                             <input type="file" onChange={e => setBgImg(e.target.files[0])} />
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex items-center gap-4">
                         <input type="text" className="border-2 border-blue-600 rounded-md" onChange={(e) => setText(e.target.value)} />
                         {
