@@ -67,8 +67,8 @@ export default function PopUpSendTemplate({ setIsFinish, data }) {
 
     return (
         <div className="fixed bg-gray-100 top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto h-full">
-            <div className="flex w-full h-full md:h-full justify-around">
-                <div id="test" className="relative bg-white rounded-lg w-[90%] shadow">
+            <div className="flex w-full h-auto md:h-auto justify-around">
+                <div id="test" className="relative bg-white rounded-lg w-[90%] shadow p-2">
 
                 </div>
             </div>
